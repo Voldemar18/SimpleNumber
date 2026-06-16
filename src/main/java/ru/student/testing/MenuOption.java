@@ -28,4 +28,15 @@ public enum MenuOption {
         }
         return null;
     }
+
+    public static String getValidCodes() {
+        StringBuilder sb = new StringBuilder();
+        for (MenuOption option : values()) {
+            if (sb.length() > 0) {
+                sb.append(", ");
+            }
+            sb.append(option.code);
+        }
+        return sb.toString();
+    }
 }

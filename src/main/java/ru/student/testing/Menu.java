@@ -1,14 +1,24 @@
 package ru.student.testing;
 
 public class Menu {
-    private final ConsoleReader consoleReader = new ConsoleReader();
-    private final PrimeNumberService primeService = new PrimeNumberService();
+    private final ConsoleReader consoleReader;
+    private final PrimeNumberService primeService;
+
+    public Menu(ConsoleReader consoleReader) {
+        this.consoleReader = consoleReader;
+        this.primeService = new PrimeNumberService();
+    }
 
     public void start() {
         boolean running = true;
         while (running) {
             printMenu();
             MenuOption choice = consoleReader.readMenuChoice();
+
+            if (choice == null) {
+                System.out.println("ОШИБКА: Введите одно из значений: " + MenuOption.getValidCodes());
+                continue;
+            }
 
             switch (choice) {
                 case FIND_PRIMES -> executeFindPrimes();
@@ -18,7 +28,6 @@ public class Menu {
                 }
             }
         }
-        consoleReader.close();
     }
 
     private void printMenu() {
@@ -30,7 +39,21 @@ public class Menu {
     }
 
     private void executeFindPrimes() {
-        int maxNumber = consoleReader.readPositiveInt("Введите число N (от 2 до 1000000): ", 2, 1_000_000);
+        System.out.print("Введите число N (от 2 до 1000000): ");
+        int maxNumber = consoleReader.readInt();
+
+        while (maxNumber < 2 || maxNumber > 1_000_000) {
+            if (maxNumber == Integer.MIN_VALUE) {
+                System.out.println("Ошибка: Введите целое число!");
+            } else if (maxNumber < 2) {
+                System.out.println("Ошибка: Число должно быть не меньше 2");
+            } else {
+                System.out.println("Ошибка: Число не больше 1_000_000");
+            }
+            System.out.print("Введите число N (от 2 до 1000000): ");
+            maxNumber = consoleReader.readInt();
+        }
+
         primeService.printAllNumbersUpTo(maxNumber);
         primeService.printPrimesUpTo(maxNumber);
     }
