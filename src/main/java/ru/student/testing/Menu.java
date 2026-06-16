@@ -8,15 +8,14 @@ public class Menu {
         boolean running = true;
         while (running) {
             printMenu();
-            int choice = consoleReader.readMenuChoice();
+            MenuOption choice = consoleReader.readMenuChoice();
 
             switch (choice) {
-                case 1 -> executeFindPrimes();
-                case 2 -> {
+                case FIND_PRIMES -> executeFindPrimes();
+                case EXIT -> {
                     System.out.println("Завершение программы...");
                     running = false;
                 }
-                default -> System.out.println("ОШИБКА: Некорректный выбор! Введите 1 или 2.");
             }
         }
         consoleReader.close();
@@ -24,8 +23,9 @@ public class Menu {
 
     private void printMenu() {
         System.out.println("\n\n--------------МЕНЮ-------------");
-        System.out.println("1 - Найти простые числа от 1 до N");
-        System.out.println("2 - Завершить программу");
+        for (MenuOption option : MenuOption.values()) {
+            System.out.println(option.getCode() + " - " + option.getDescription());
+        }
         System.out.print("Выберите действие: ");
     }
 

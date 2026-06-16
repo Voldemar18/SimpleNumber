@@ -5,11 +5,14 @@ import java.util.Scanner;
 public class ConsoleReader {
     private final Scanner scanner = new Scanner(System.in);
 
-    public int readMenuChoice() {
+    public MenuOption readMenuChoice() {
         while (true) {
             try {
                 int choice = Integer.parseInt(scanner.nextLine());
-                if (choice == 1 || choice == 2) return choice;
+                MenuOption option = MenuOption.fromCode(choice);
+                if (option != null) {
+                    return option;
+                }
                 System.out.println("ОШИБКА: Введите 1 или 2!");
             } catch (NumberFormatException e) {
                 System.out.println("ОШИБКА: Введите число!");

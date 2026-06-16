@@ -6,7 +6,9 @@ public class PrimeNumberService {
         System.out.print("Все числа от 1 до " + limit + ": ");
         for (int i = 1; i <= limit; i++) {
             System.out.print(i);
-            if (i < limit) System.out.print(", ");
+            if (i < limit) {
+                System.out.print(", ");
+            }
         }
         System.out.println();
     }
@@ -17,20 +19,28 @@ public class PrimeNumberService {
 
         for (int number = 2; number <= limit; number++) {
             if (isPrime(number)) {
-                if (foundPrime) System.out.print(", ");
+                if (foundPrime) {
+                    System.out.print(", ");
+                }
                 System.out.print(number);
                 foundPrime = true;
             }
         }
 
-        if (!foundPrime) System.out.print("нет простых чисел");
+        if (!foundPrime) {
+            System.out.print("нет простых чисел");
+        }
         System.out.println();
     }
 
     private boolean isPrime(int number) {
-        if (number < 2) return false;
+        if (number < 2) {
+            return false;
+        }
         for (int divisor = 2; divisor <= Math.sqrt(number); divisor++) {
-            if (number % divisor == 0) return false;
+            if (number % divisor == 0) {
+                return false;
+            }
         }
         return true;
     }
