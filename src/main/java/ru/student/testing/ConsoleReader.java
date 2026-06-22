@@ -17,7 +17,6 @@ public class ConsoleReader {
             return null;
         }
     }
-
     public Integer readInt() {
         try {
             return Integer.parseInt(scanner.nextLine());

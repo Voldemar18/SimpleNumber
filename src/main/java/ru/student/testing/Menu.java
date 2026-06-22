@@ -8,7 +8,6 @@ public class Menu {
         this.consoleReader = consoleReader;
         this.primeService = new PrimeNumberService();
     }
-
     public void start() {
         MenuOption choice;
         do {
@@ -34,7 +33,6 @@ public class Menu {
         }
         System.out.print("Выберите действие: ");
     }
-
     private int readValidNumber() {
         Integer maxNumber = null;
         boolean valid = false;
@@ -64,4 +62,6 @@ public class Menu {
         primeService.printAllNumbersUpTo(maxNumber);
         primeService.printPrimesUpTo(maxNumber);
     }
+
+
 }
