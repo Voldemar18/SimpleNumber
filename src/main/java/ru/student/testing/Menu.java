@@ -10,10 +10,10 @@ public class Menu {
     }
 
     public void start() {
-        boolean running = true;
-        while (running) {
+        MenuOption choice;
+        do {
             printMenu();
-            MenuOption choice = consoleReader.readMenuChoice();
+            choice = consoleReader.readMenuChoice();
 
             if (choice == null) {
                 System.out.println("ОШИБКА: Введите одно из значений: " + MenuOption.getValidCodes());
@@ -22,12 +22,9 @@ public class Menu {
 
             switch (choice) {
                 case FIND_PRIMES -> executeFindPrimes();
-                case EXIT -> {
-                    System.out.println("Завершение программы...");
-                    running = false;
-                }
+                case EXIT -> System.out.println("Завершение программы...");
             }
-        }
+        } while (choice != MenuOption.EXIT);
     }
 
     private void printMenu() {
@@ -38,22 +35,32 @@ public class Menu {
         System.out.print("Выберите действие: ");
     }
 
-    private void executeFindPrimes() {
-        System.out.print("Введите число N (от 2 до 1000000): ");
-        int maxNumber = consoleReader.readInt();
+    private int readValidNumber() {
+        Integer maxNumber = null;
+        boolean valid = false;
 
-        while (maxNumber < 2 || maxNumber > 1_000_000) {
-            if (maxNumber == Integer.MIN_VALUE) {
-                System.out.println("Ошибка: Введите целое число!");
-            } else if (maxNumber < 2) {
-                System.out.println("Ошибка: Число должно быть не меньше 2");
-            } else {
-                System.out.println("Ошибка: Число не больше 1_000_000");
-            }
+        while (!valid) {
             System.out.print("Введите число N (от 2 до 1000000): ");
             maxNumber = consoleReader.readInt();
-        }
 
+            if (maxNumber == null) {
+                System.out.println("Ошибка: Введите целое число!");
+                continue;
+            }
+
+            if (maxNumber < 2) {
+                System.out.println("Ошибка: Число должно быть не меньше 2");
+            } else if (maxNumber > 1_000_000) {
+                System.out.println("Ошибка: Число не больше 1_000_000");
+            } else {
+                valid = true;
+            }
+        }
+        return maxNumber;
+    }
+
+    private void executeFindPrimes() {
+        int maxNumber = readValidNumber();
         primeService.printAllNumbersUpTo(maxNumber);
         primeService.printPrimesUpTo(maxNumber);
     }

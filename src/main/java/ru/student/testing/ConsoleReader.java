@@ -18,11 +18,11 @@ public class ConsoleReader {
         }
     }
 
-    public int readInt() {
+    public Integer readInt() {
         try {
             return Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e) {
-            return Integer.MIN_VALUE;
+            return null;
         }
     }
 }
